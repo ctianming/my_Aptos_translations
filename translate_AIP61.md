@@ -645,7 +645,7 @@ Pepper有两个重要的属性：
 
 ### JWT头和有效载荷样例
 
-以下是来自 Google OAuth游乐场[^oauth-playground]的JWT样例。
+以下是来自 Google OAuth操场[^oauth-playground]的JWT样例。
 
 JWT 头部：
 
