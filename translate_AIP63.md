@@ -11,6 +11,8 @@ created: <12/05/2023>
 
 原文链接：https://github.com/aptos-foundation/AIPs/blob/main/aips/aip-63.md
 
+译者注： 本文中的可替代资产(fungible asset) 和 `FA` 是一个意思，“硬币” 则代表了 `coin`
+
 ---
 
 # AIP-63 - Coin to Fungible Asset Migration (硬币向可替代资产迁移方案)
@@ -41,7 +43,7 @@ created: <12/05/2023>
 
 ## 动机
 
-在Aptos网络中DeFi应用的广泛接纳之前，启动迁移过程以简化新dapps的部署至关重要。否则，开发者可能需要在两个不同的标准上执行相同的业务逻辑，而资产流动性可能会因此分散，这对于整个Aptos生态系统来说可能是一个沉重且不健康的负担。此外，CeFi应用也有可能面临类似的挑战。当前混乱的局面，即存在多种资产标准，给开发者和用户带来了显著的困扰，这是一个亟需解决的问题。
+在Aptos网络中DeFi应用广泛接纳之前，启动迁移过程以简化新dapps的部署至关重要。否则，开发者可能需要在两个不同的标准上执行相同的业务逻辑，而资产流动性可能会因此分散，这对于整个Aptos生态系统来说可能是一个沉重且不健康的负担。此外，CeFi应用也有可能面临类似的挑战。当前混乱的局面，即存在多种资产标准，给开发者和用户带来了显著的困扰，这是一个亟需解决的问题。
 
 ## 影响
 
@@ -103,7 +105,7 @@ created: <12/05/2023>
 // 从硬币转换为可替代资产
 public fun coin_to_fungible_asset<CoinType>(coin: Coin<CoinType> ): FungibleAsset;
 
-// 从可替代资产转换为硬币。不公开以推动向FA的迁移。
+// 从可替代资产转换为硬币。若不使用 public 则用以推动向FA的迁移。
 public fun fungible_asset_to_coin<CoinType>(fungible_asset: FungibleAsset):
 ```
 
@@ -134,9 +136,9 @@ fun maybe_convert_to_fungible_store<CoinType>(account: address) acquires CoinSto
         fungible_asset::deposit(store, fungible_asset);
         // 注意：
         // 在调用此函数之前，主要的可替代资产存储可能已经存在。
-        // 在这种情况下，如果账户拥有一个冻结的CoinStore和一个未冻结的主要可替代资产存储，这个
-        // 函数会将剩余的硬币转换并存入主要存储，并冻结它，以使
-        // `frozen`的语义尽可能一致。
+        // 在这种情况下，如果账户拥有一个冻结的CoinStore和一个未冻结的主要可替代资产存储，
+        // 这个函数会将剩余的硬币转换并存入主要存储，并冻结它，
+        // 以使`frozen`的语义尽可能一致。
         fungible_asset::set_frozen_flag_internal(store, frozen);
     };
 }
