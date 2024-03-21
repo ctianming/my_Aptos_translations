@@ -221,9 +221,9 @@ Passkeys最初是作为替代网站密码的一种方式引入的，通过让网
 
 1. $\mathsf{iss\\_val}$：OIDC提供商的身份，如它在JWT的`iss`字段中出现（例如，`https://accounts.google.com`），由 $\mathsf{iss\\_val}$ 表示
 2. $\mathsf{addr\\_idc}$：一个**身份承诺（IDC）**，这是一个<u>隐藏</u>承诺，承诺包括：
-   - OIDC提供商发给拥有用户的标识符（例如，`alice@gmail.com`），由$\mathsf{uid\\_val}$表示。
-   - 存储用户标识符的JWT字段的名称，由$\mathsf{uid\\_key}$表示。目前，我们只允许`sub`或`email`[^jwt-email-field]。
-   - 在与OIDC提供商注册期间发给管理应用程序的标识符（即，存储在JWT的`aud`字段中的OAuth `client_id`），由$\mathsf{aud\\_val}$表示。
+   - OIDC提供商发给拥有用户的标识符（例如，`alice@gmail.com`），由 $\mathsf{uid\\_val}$ 表示。
+   - 存储用户标识符的JWT字段的名称，由 $\mathsf{uid\\_key}$ 表示。目前，我们只允许`sub`或`email`[^jwt-email-field]。
+   - 在与OIDC提供商注册期间发给管理应用程序的标识符（即，存储在JWT的`aud`字段中的OAuth `client_id`），由 $\mathsf{aud\\_val}$ 表示。
 
 稍微正式一点（但忽略复杂的实现细节），IDC是通过使用一个对SNARK友好的哈希函数$H'$对上述字段进行哈希计算得到的：
 
@@ -233,19 +233,19 @@ Passkeys最初是作为替代网站密码的一种方式引入的，通过让网
 
 #### Peppers
 
-注意我们使用一个（高熵）盲因子$r$来推导上述的IDC。这确保了IDC确实是对用户和管理应用的身份的隐藏承诺。在整个AIP中，这个盲因子被称为保护隐私的**pepper**。
+注意我们使用一个（高熵）盲因子 $r$ 来推导上述的IDC。这确保了IDC确实是对用户和管理应用的身份的隐藏承诺。在整个AIP中，这个盲因子被称为保护隐私的**pepper**。
 
 Pepper有两个重要的属性：
 
 1. 在签署交易以授权访问账户时，将需要知道pepper $r$。
-2. 如果pepper被公开揭示，这将**不会**让攻击者获得与这个公钥关联的账户的访问权限。换句话说，与秘密密钥不同，pepper不需要保持秘密以保护账户的安全性；只需要保护账户的隐私。
+2. 如果pepper被公开揭示，这将**不会**让攻击者获得与这个公钥关联的账户的访问权限。换句话说，与密钥不同，pepper不需要保持秘密以保护账户的安全性；只需要保护账户的隐私。
 
 更简单地说：
 
 - 如果**pepper丢失**，那么对**账户的访问就丢失了**。
-- 如果**pepper被揭示**（例如，被盗），那么只有**账户的隐私丢失了**（即，$\mathsf{addr\\_idc}$中的用户和应用身份可以被暴力破解并最终被揭示）。
+- 如果**pepper被揭示**（例如，被盗），那么只有**账户的隐私丢失了**（即， $\mathsf{addr\\_idc}$ 中的用户和应用身份可以被暴力破解并最终被揭示）。
 
-依赖于用户记住他们的pepper $r$，这将维持易于丢失的基于秘密密钥的账户的现状，从而*打破了基于OpenID的区块链账户的目标*。
+依赖于用户记住他们的pepper $r$，这将维持易于丢失的基于密钥的账户的现状，从而*打破了基于OpenID的区块链账户的目标*。
 
 因此，我们引入了一个**pepper服务**，可以帮助用户恢复他们的pepper（我们在[附录](#Pepper-service)中讨论了它的属性）。
 
@@ -265,15 +265,15 @@ Pepper有两个重要的属性：
 
 > 与这个公钥关联的私钥是什么？
 
-答案是，用户没有额外的秘密密钥需要记下来。相反，这个“私钥”，由用户通过上述的$\mathsf{auth\\_key}$中承诺的管理应用程序登录到OIDC账户的能力构成。
+答案是，用户没有额外的密钥需要记忆。相反，这个“私钥”，由用户通过上述的 $\mathsf{auth\\_key}$ 中承诺的管理应用程序登录到OIDC账户的能力构成。
 
 换句话说，这个“私钥”可以被认为是用户对那个账户的密码，用户已经知道了，或者一个预安装的HTTP cookie，这可以避免用户需要重新输入密码。尽管如此，这个**密码是不够的**：管理应用程序必须是可用的：它必须允许用户登录到他们的OIDC账户并接收OIDC签名。（我们稍后讨论[如何处理消失的应用程序](#alternative-recovery-paths-for-when-managing-applications-disappear)。）
 
-更正式地说，如果一个用户可以成功地使用由$\mathsf{aud\\_val}$标识的应用程序登录（通过OAuth）到由$(\mathsf{uid\\_key}, \mathsf{uid\\_val})$标识并由$\mathsf{iss\\_val}$标识的OIDC提供商发出的OIDC账户，那么这个能力就作为那个用户的“秘密密钥”。
+更正式地说，如果一个用户可以成功地使用由 $\mathsf{aud\\_val}$ 标识的应用程序登录（通过OAuth）到由 $(\mathsf{uid\\_key}, \mathsf{uid\\_val})$ 标识并由 $\mathsf{iss\\_val}$ 标识的OIDC提供商发出的OIDC账户，那么这个能力就作为那个用户的“私钥”。
 
 #### _热身_：泄露用户和应用身份的签名
 
-在描述我们完全保护隐私的TXN签名之前，我们先热身一下，描述一下**泄露签名**，它们会泄露用户和应用的身份：即，它们会泄露$\mathsf{uid\\_key}, \mathsf{uid\\_val}$和$\mathsf{aud\\_val}$。
+在描述我们完全保护隐私的TXN签名之前，我们先热身一下，描述一下**泄露签名**，它们会泄露用户和应用的身份：即，它们会泄露 $\mathsf{uid\\_key}, \mathsf{uid\\_val}$ 和 $\mathsf{aud\\_val}$ 。
 
 一个地址的交易$\mathsf{txn}$的**泄露签名**$\sigma_\mathsf{txn}$，该地址的认证密钥为$\mathsf{auth\\_key}$，定义如下：
 
@@ -283,15 +283,15 @@ Pepper有两个重要的属性：
 
 其中:
 
-1. $\mathsf{uid\_key}$是JWT字段的名称，用于存储用户的身份，其值在地址IDC中被承诺
-2. $\mathsf{jwt}$是JWT的有效载荷（例如，参见这里的示例）
-3. $\mathsf{header}$是JWT头；表示OIDC签名方案和JWK的密钥ID，这些都是在正确的PK下验证OIDC签名所必需的
+1. $\mathsf{uid\_key}$ 是JWT字段的名称，用于存储用户的身份，其值在地址IDC中被承诺
+2. $\mathsf{jwt}$ 是JWT的有效载荷（例如，参见这里的示例）
+3. $\mathsf{header}$ 是JWT头；表示OIDC签名方案和JWK的密钥ID，这些都是在正确的PK下验证OIDC签名所必需的
 4. $\mathsf{epk}$，是由管理应用程序生成的临时公钥（EPK）（其关联的$\mathsf{esk}$在管理应用程序端保密）
-5. $\sigma_\mathsf{eph}$是对交易$\mathsf{txn}$的临时签名
-6. $\sigma_\mathsf{oidc}$是对完整JWT（即，对$\mathsf{header}$和$\mathsf{jwt}$有效载荷）的OIDC签名
-7. $\mathsf{exp\_date}$是一个时间戳，过了这个时间，$\mathsf{epk}$就被认为过期，不能用来签名TXN。
-8. $\rho$是一个高熵的EPK盲因子，用于创建对$\mathsf{epk}$和$\mathsf{exp\_date}$的EPK承诺，该承诺存储在$\mathsf{jwt}[\texttt{"nonce"}]$字段中
-9. $r$是地址IDC的pepper，假定在这种"泄露模式"下为零
+5. $\sigma_\mathsf{eph}$ 是对交易$\mathsf{txn}$的临时签名
+6. $\sigma_\mathsf{oidc}$ 是对完整JWT（即，对$\mathsf{header}$和$\mathsf{jwt}$有效载荷）的OIDC签名
+7. $\mathsf{exp\_date}$ 是一个时间戳，过了这个时间，$\mathsf{epk}$就被认为过期，不能用来签名TXN。
+8. $\rho$是一个高熵的EPK盲因子，用于创建对 $\mathsf{epk}$ 和 $\mathsf{exp\_date}$ 的EPK承诺，该承诺存储在 $\mathsf{jwt}[\texttt{"nonce"}]$ 字段中
+9. $r$ 是地址IDC的pepper，假定在这种"泄露模式"下为零
 
 **简而言之**：为了**验证交易签名 $\sigma_\mathsf{txn}$**，验证者需要检查OIDC提供者是否（1）对用户和应用ID在地址IDC中的承诺进行了签名，以及（2）对EPK进行了签名，此EPK又对交易进行了签名，并且对EPK执行了一些过期策略。
 
