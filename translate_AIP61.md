@@ -219,7 +219,7 @@ Passkeys最初是作为替代网站密码的一种方式引入的，通过让网
 
 无密钥账户的**公钥**包括：
 
-1. $\mathsf{iss\\_val}$：OIDC提供商的身份，如它在JWT的`iss`字段中出现（例如，`https://accounts.google.com`），由$\mathsf{iss\\_val}$表示
+1. $\mathsf{iss\\_val}$：OIDC提供商的身份，如它在JWT的`iss`字段中出现（例如，`https://accounts.google.com`），由 $\mathsf{iss\\_val}$ 表示
 2. $\mathsf{addr\\_idc}$：一个**身份承诺（IDC）**，这是一个<u>隐藏</u>承诺，承诺包括：
    - OIDC提供商发给拥有用户的标识符（例如，`alice@gmail.com`），由$\mathsf{uid\\_val}$表示。
    - 存储用户标识符的JWT字段的名称，由$\mathsf{uid\\_key}$表示。目前，我们只允许`sub`或`email`[^jwt-email-field]。
