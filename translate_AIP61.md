@@ -620,7 +620,7 @@ Pepper有两个重要的属性：
 
 ### 应设置的最大过期时间阈值  $\mathsf{max\\_exp\\_horizon}$  是多少？
 
-回忆一下， $\mathsf{exp\_date}$ 的值不应超过 $\mathsf{jwt}[\texttt{"iat"}] + \mathsf{max\\_exp\\_horizon}$ 。
+回忆一下， $\mathsf{exp\\_date}$ 的值不应超过 $\mathsf{jwt}[\texttt{"iat"}] + \mathsf{max\\_exp\\_horizon}$ 。
 
 限制因素：
 
