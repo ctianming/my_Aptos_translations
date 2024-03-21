@@ -173,11 +173,11 @@ requires (*optional): <AIP number(s)>
 
 ### Passkeys
 
-一个避免用户需要管理自己秘密密钥的替代方案是**Passkeys**和围绕它们构建的**WebAuthn标准**。Passkey是与应用程序或网站关联的秘密密钥，它在用户的云中备份（例如，Apple的iCloud，Google的密码管理器等）。
+一个避免用户需要管理自己密钥的替代方案是**Passkeys**和围绕它们构建的**WebAuthn标准**。Passkey是与应用程序或网站关联的密钥，它在用户的云中备份（例如，Apple的iCloud，Google的密码管理器等）。
 
-Passkeys最初是作为替代网站密码的一种方式引入的，通过让网站将每个用户与他们的Passkey公钥关联，而不是他们的密码。然后，用户可以使用他们相应的Passkey秘密密钥签署一个随机挑战，以安全地验证他们自己到网站，这个秘密密钥在他们的云中安全备份。
+Passkeys最初是作为替代网站密码的一种方式引入的，通过让网站将每个用户与他们的Passkey公钥关联，而不是他们的密码。然后，用户可以使用他们相应的Passkey密钥签署一个随机挑战，以安全地验证他们自己到网站，这个密钥在他们的云中安全备份。
 
-一个自然的倾向是利用Passkeys为区块链账户服务，通过将账户的秘密密钥设置为Passkey秘密密钥。不幸的是，Passkeys目前有两个缺点，这些缺点可能在未来得到解决。具体来说，**Passkeys并不总是在云中备份**在一些平台上（例如，Microsoft Windows）。此外，Passkeys引入了一个**跨设备问题**：如果用户在他们的Apple手机上创建一个区块链账户，他们的Passkey秘密密钥会备份到iCloud，这将无法从该用户的其他Android设备、Linux设备或Windows设备访问，因为跨平台备份Passkeys的支持尚未实现。
+一个自然的倾向是利用Passkeys为区块链账户服务，通过将账户的密钥设置为Passkey密钥。不幸的是，Passkeys目前有两个缺点，这些缺点可能在未来得到解决。具体来说，**Passkeys并不总是在云中备份**在一些平台上（例如，Microsoft Windows）。此外，Passkeys引入了一个**跨设备问题**：如果用户在他们的Apple手机上创建一个区块链账户，他们的Passkey密钥会备份到iCloud，这将无法从该用户的其他Android设备、Linux设备或Windows设备访问，因为跨平台备份Passkeys的支持尚未实现。
 
 ### 多方计算 (MPC)
 
