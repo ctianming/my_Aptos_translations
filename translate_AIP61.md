@@ -340,16 +340,6 @@ Pepper有两个重要的属性：
 \sigma_\mathsf{txn} = (\mathsf{header}, \mathsf{epk}, \sigma_\mathsf{eph}, \mathsf{exp\_date}, \mathsf{exp\_horizon}, \pi)
 ```
 
-where:
-
-1. $(\mathsf{header}$, $\mathsf{epk}$, $\sigma_\mathsf{eph}$, $\mathsf{exp\\_date})$ are as before
-2. $\mathsf{exp\\_horizon}$, which is $\le \mathsf{max\\_exp\\_horizon}$; the $\mathsf{exp\\_date}$ must be between $\mathsf{jwt}[\texttt{"iat"}]$ and $\mathsf{jwt}[\texttt{"iat"}]+\mathsf{exp\\_horizon}$
-3. $\pi$ is a **zero-knowledge proof of knowledge (ZKPoK)** for the the ZK relation $\mathcal{R}$ (defined below).
-
-Note that it no longer contains any identifying user information (beyond the identity of the OIDC provider in $\mathsf{iss\\_val}$)
-
-**tl;dr**: To **verify the $\sigma_\mathsf{txn}$ signature**, validators verify a ZKPoK of an OIDC signature over (1) the user and app IDs that are committed in the authentication key and (2) the EPK which, in turn, signed the transaction, while enforcing some expiration date on the EPK.
-
 其中：
 
 1. $(\mathsf{header}, \mathsf{epk}, \sigma_\mathsf{eph}, \mathsf{exp\\_date})$ 如之前的描述。
