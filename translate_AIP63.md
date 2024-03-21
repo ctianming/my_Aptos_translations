@@ -8,13 +8,12 @@ created: <12/05/2023>
 ---
 
 ---
-本文译者：[肖登宇](#https://github.com/ctianming)
 
-原文链接：[AIP-63 - Coin to Fungible Asset Migration](#https://github.com/aptos-foundation/AIPs/blob/main/aips/aip-63.md)
+原文链接：https://github.com/aptos-foundation/AIPs/blob/main/aips/aip-63.md
 
 ---
 
-# AIP-63 - 硬币向可替代资产迁移方案
+# AIP-63 - Coin to Fungible Asset Migration (硬币向可替代资产迁移方案)
 
 ## 摘要
 [AIP-21](https://github.com/lightmark/AIPs/blob/main/aips/aip-21.md)提出了可替代资产（FA）标准，旨在取代现有的硬币标准，用于链上表达所有形式的可替代资产，包括但不限于传统的硬币。

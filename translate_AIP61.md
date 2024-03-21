@@ -12,9 +12,8 @@ requires (*optional): <AIP number(s)>
 ---
 
 ---
-本文译者：<a herf= "https://github.com/ctianming">肖登宇</a>
 
-原文链接：<a herf="https://github.com/aptos-foundation/AIPs/blob/main/aips/aip-61.md">AIP-61 - Keyless accounts</a>
+原文链接：https://github.com/aptos-foundation/AIPs/blob/main/aips/aip-61.md
 
 译者注： `secret key`这一名词，在本文中存在两种不同的翻译方案，当与`public key(公钥)`一起出现时，它被翻译为`私钥`，其余一并翻译为`秘钥`。
 

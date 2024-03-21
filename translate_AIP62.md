@@ -10,13 +10,12 @@ created: 29/01/2024
 ---
 
 ---
-本文译者：[肖登宇](#https://github.com/ctianming)
 
-原文链接：[AIP-62 - Wallet Standard](#https://github.com/aptos-foundation/AIPs/blob/main/aips/aip-62.md)
+原文链接：https://github.com/aptos-foundation/AIPs/blob/main/aips/aip-62.md
 
 ---
 
-# AIP-62 - 钱包标准
+# AIP-62 - Wallet Standard (钱包标准)
 
 ## 摘要
 
