@@ -298,10 +298,10 @@ Pepper有两个重要的属性：
 更详细地说，针对公钥 $(\mathsf{iss\\_val}, \mathsf{addr\\_idc})$ 的签名验证包括以下步骤：
 
 1. 如果使用基于`email`的ID，确保已验证电子邮件：
-   1. 如果 $\mathsf{uid\\_key}\stackrel{?}{=}\texttt{"email"}$，则断言 $\mathsf{jwt}[\texttt{"email\\_verified"}] \stackrel{?}{=} \texttt{"true"}$
+   1. 如果 $\mathsf{uid\\_key}\stackrel{?}{=}\texttt{"email"}$，则断言  $\mathsf{jwt}[\texttt{"email\\_verified"}] \stackrel{?}{=} \texttt{"true"}$
 2. 让 $\mathsf{uid\\_val}\gets\mathsf{jwt}[\mathsf{uid\\_key}]$
 3. 让 $\mathsf{aud\\_val}\gets\mathsf{jwt}[\texttt{"aud"}]$
-4. 断言 $\mathsf{addr\\_idc} \stackrel{?}{=} H'(\mathsf{uid\\_key}, \mathsf{uid\\_val}, \mathsf{aud\\_val}; r)$，其中$r$来自签名的pepper
+4. 断言 $\mathsf{addr\\_idc} \stackrel{?}{=} H'(\mathsf{uid\\_key}, \mathsf{uid\\_val}, \mathsf{aud\\_val}; r)$，其中 $r$ 来自签名的pepper
 5. 验证PK是否与链上的认证密钥匹配：
    1. 断言 $\mathsf{auth\\_key} \stackrel{?}{=} H(\mathsf{iss\\_val}, \mathsf{addr\\_idc})$
 6. 检查EPK是否在JWT的`nonce`字段中提交：
@@ -313,17 +313,17 @@ Pepper有两个重要的属性：
    1. 断言 $\texttt{current\\_block\\_time()} < \mathsf{exp\\_date}$
 9. 验证交易 $\mathsf{txn}$ 下的 $\mathsf{epk}$ 的临时签名 $\sigma_\mathsf{eph}$
 10. 获取OIDC提供者的正确PK，由 $\mathsf{jwk}$ 表示，通过JWT $\mathsf{header}$ 中的 `kid` 字段识别。
-11. 验证JWT $\mathsf{header}$ 和有效载荷 $\mathsf{jwt}$ 下的 $\mathsf{jwk}$ 的OIDC签名 $\sigma_\mathsf{oidc}$。
+11. 验证JWT $\mathsf{header}$ 和有效载荷 $\mathsf{jwt}$ 下的  $\mathsf{jwk}$ 的OIDC签名 $\sigma_\mathsf{oidc}$ 。
 
 **JWK共识**：验证OIDC签名的最后一步需要验证者**就OIDC提供商的最新JWKs（即公钥）达成共识**，这些公钥在特定时间周期内会更新。公钥在**OpenID配置URL**定期进行更新（参见[附录](#jwk-consensus)）。
 
 如何在所有支持的OIDC提供商的JWKs上达成Aptos验证者的共识将是另一个AIP的讨论主题。目前，本AIP假设有一个机制存在，验证者能够通过`aptos_framework::jwks` Move模块获取到当下供应商的JWKs。
 
-**过期时间视界的必要性**：我们认为，对于不了解情况的dapps设置一个过于延长的$\mathsf{exp\\_date}$是危险的。它会给攻击者提供一个更加长的时间窗口，以破坏已签名的JWT（及其关联的ESK）。因此，我们实施了一项规定，即过期时间不宜设置得过远，基于JWT的`iat`字段和一个“最大过期视界”$\mathsf{max\\_exp\\_horizon}$来确定：即，我们确保$\mathsf{exp\\_date} < \mathsf{jwt}[\texttt{"iat"}] + \mathsf{max\\_exp\\_horizon}$。
+**过期时间视界的必要性**：我们认为，对于不了解情况的dapps设置一个过于延长的 $\mathsf{exp\\_date}$是危险的。它会给攻击者提供一个更加长的时间窗口，以破坏已签名的JWT（及其关联的ESK）。因此，我们实施了一项规定，即过期时间不宜设置得过远，基于JWT的`iat`字段和一个“最大过期视界” $\mathsf{max\\_exp\\_horizon}$ 来确定：即，我们确保 $\mathsf{exp\\_date} < \mathsf{jwt}[\texttt{"iat"}] + \mathsf{max\\_exp\\_horizon}$ 。
 
 另一种方法是确保 $\mathsf{exp\\_date} < \texttt{current\\_block\\_time()} + \mathsf{max\\_exp\\_horizon}$。然而，这并不理想。攻击者可能会创建一个 $\mathsf{exp\\_date}$，在当前时间 $t_1 = \texttt{current\\_block\\_time()}$ 时无法通过检查（即，$\mathsf{exp\\_date} \ge t_1 + \mathsf{max\\_exp\\_horizon}$），但在时间变为 $t_2 > t_1$ 时能够通过检查（即，$\mathsf{exp\\_date} < t_2 + \mathsf{max\\_exp\\_horizon}$）。因此，这种设计会允许看似无效（因此无害）的已签名JWT后来变得有效（因此值得攻击）。依赖 `iat` 可以避免这个问题。
 
-接下来将要解决的**关于模式泄露的警告**：
+接下来将要解决是的**关于模式泄露的警告**：
 
 - Pepper $r$ 会因为交易而泄露，使得地址IDC暴露于暴力破解的风险之中。
 - 类似地，EPK的盲化因子 $\rho$ 被交易透露，目前还未能实现其保护隐私的预期功能。
