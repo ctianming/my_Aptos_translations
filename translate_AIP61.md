@@ -618,9 +618,9 @@ Pepper有两个重要的属性：
 2. 采用OAuth代码授权流程，浏览器存储ESK，而签名的JWT则存储在后端。
    - 不幸的是，一些OIDC提供商允许在后端使用新的`nonce`字段刷新签名的JWT，而无需用户同意。这意味着一旦后端受到攻击，即便是OAuth会话未过期，攻击者也可能在不需要用户访问网站的情况下刷新JWT，并窃取无密钥账户。
 
-### 应设置的最大过期时间阈值  $\mathsf{max\_exp\_horizon}$  是多少？
+### 应设置的最大过期时间阈值  $\mathsf{max\\_exp\\_horizon}$  是多少？
 
-回忆一下， $\mathsf{exp\_date}$ 的值不应超过 $\mathsf{jwt}[\texttt{"iat"}] + \mathsf{max\_exp\_horizon}$ 。
+回忆一下， $\mathsf{exp\_date}$ 的值不应超过 $\mathsf{jwt}[\texttt{"iat"}] + \mathsf{max\\_exp\\_horizon}$ 。
 
 限制因素：
 
