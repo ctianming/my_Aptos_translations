@@ -334,7 +334,7 @@ Pepper有两个重要的属性：
 
 这引导我们进入这一AIP的核心议题：我们已准备就绪，可以描绘我们如何实现针对无密钥账户的隐私保护签名机制了。这样的签名对于用户的OIDC账户以及与无密钥账户相关的服务应用的身份信息绝不泄露任何信息。
 
-特定的交易 $\mathsf{txn}$，该交易针对拥有认证密钥 $\mathsf{auth\\_key}$ 的地址，其**零知识签名** $\sigma_\mathsf{txn}$ 定义如下所示：
+特定的交易 $\mathsf{txn}$，该交易针对拥有认证密钥 $\mathsf{auth\\_key}$ 的地址，其**零知识签名**  $\sigma_\mathsf{txn}$  定义如下所示：
 
 ```math
 \sigma_\mathsf{txn} = (\mathsf{header}, \mathsf{epk}, \sigma_\mathsf{eph}, \mathsf{exp\_date}, \mathsf{exp\_horizon}, \pi)
