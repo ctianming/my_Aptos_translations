@@ -27,7 +27,7 @@ requires (*optional): <AIP number(s)>
 
 目前，保护您的Aptos帐户的唯一方法是保护与之关联的**密钥（SK）**。不幸的是，这说起来容易做起来难。在现实中，密钥经常丢失（例如，用户在第一次设置他们的Aptos钱包时忘记写下他们的助记词）或被盗（例如，用户被欺骗导致暴露他们的SK）。这导致用户注册过程过于复杂，并在账户遗失或被盗时，导致用户流失。
 
-在本AIP中，我们阐述了一种对用户更加友好的账户管理途径，该方法基于未经修改的[^openpubkey]**OpenID Connect (OIDC)**标准，并结合了关于**OIDC签名**的**零知识证明(ZKPoKs)**的最新进展[^snark-jwt-verify]$^,$[^nozee]$^,$[^bonsay-pay]$^,$[^zk-blind]$^,$[^zklogin]。
+在本AIP中，我们阐述了一种对用户更加友好的账户管理途径，该方法基于未经修改的[^openpubkey]**OpenID Connect (OIDC)**标准，并结合了关于**OIDC签名**的**零知识证明(ZKPoKs) **的最新进展[^snark-jwt-verify]$^,$[^nozee]$^,$[^bonsay-pay]$^,$[^zk-blind]$^,$[^zklogin]。
 
 具体来说，我们在Aptos上启用了**无密钥账户**，这些账户通过所有者现有的**OIDC账户**（即，他们与**OIDC提供商**（如Google，GitHub或Apple）相关的Web2账户）进行保护，而不是通过难以管理的密钥。简而言之，_“你的区块链账户 = 你的OIDC账户”_。
 
